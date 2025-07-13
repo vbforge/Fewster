@@ -30,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LoadTest {
 
     public static final int THREAD_COUNT = 100;
+
     @Autowired
     private MockMvc mockMvc;
 
