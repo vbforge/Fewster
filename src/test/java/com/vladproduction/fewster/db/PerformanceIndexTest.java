@@ -36,7 +36,7 @@ public class PerformanceIndexTest {
         long end = System.currentTimeMillis();
 
         assertThat(entity).isPresent();
-        assertThat(end - start).isLessThan(1_000_000); // <1ms
+        assertThat(end - start).isLessThan(100); // < 100ms
     }
 
 }

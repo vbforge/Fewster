@@ -29,7 +29,7 @@ public class GlobalUtility {
 
     /**
      * helper method to generate unique short URL
-     * */
+     */
     public String generateUniqueShortUrl(String originalUrl) {
         String shortUrl = algorithmService.makeShort(originalUrl);
 
@@ -50,11 +50,11 @@ public class GlobalUtility {
 
     /**
      * helper method to check if url is valid
-     * */
-    public boolean isValidUrl(String url){
+     */
+    public boolean isValidUrl(String url) {
         return url == null ||
-               url.trim().isEmpty() ||
-               (!url.startsWith(HTTP) && !url.startsWith(HTTPS));
+                (url.trim().isEmpty()) ||
+                (!url.startsWith(HTTP) && !url.startsWith(HTTPS));
 
     }
 

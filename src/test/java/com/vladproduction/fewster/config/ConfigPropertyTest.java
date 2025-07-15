@@ -8,7 +8,12 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.*;
 
-@SpringBootTest(properties = {"short.url.length=9", "base.url.prefix=https://custom.short/", "generate.unique.short.url.maxAttempt=3"})
+@SpringBootTest(
+        properties = {
+                "base.url.prefix=https://custom.short/",
+                "generate.unique.short.url.maxAttempt=3",
+                "short.url.length=9"
+        })
 @ActiveProfiles("constraints")
 public class ConfigPropertyTest {
 
@@ -16,17 +21,17 @@ public class ConfigPropertyTest {
     private Environment env;
 
     @Test
-    void shouldOverrideShortUrlLength() {
+    void shouldOverrideShortUrlLength_test() {
         assertThat(env.getProperty("short.url.length")).isEqualTo("9");
     }
 
     @Test
-    void shouldUseCustomPrefix() {
+    void shouldUseCustomPrefix_test() {
         assertThat(env.getProperty("base.url.prefix")).isEqualTo("https://custom.short/");
     }
 
     @Test
-    void shouldUseCustomMaxAttempts() {
+    void shouldUseCustomMaxAttempts_test() {
         assertThat(env.getProperty("generate.unique.short.url.maxAttempt")).isEqualTo("3");
     }
 
