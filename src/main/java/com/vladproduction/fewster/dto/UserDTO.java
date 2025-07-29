@@ -1,7 +1,6 @@
 package com.vladproduction.fewster.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 public class UserDTO {
 

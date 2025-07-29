@@ -75,8 +75,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 
-    //DataIntegrityViolationException
-    //SQLIntegrityConstraintViolationException
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(DataIntegrityViolationException ex) {
         log.error("Unexpected error occurred", ex);

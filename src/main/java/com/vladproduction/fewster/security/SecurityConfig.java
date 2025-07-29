@@ -20,13 +20,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
     @Value("${role.name}")
     private String role;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers(HttpMethod.POST, "/api/v1/url/**").hasRole(role);
@@ -34,7 +32,6 @@ public class SecurityConfig {
                     authorize.requestMatchers(HttpMethod.GET, "/api/v1/url/**").hasRole(role);
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults());
-
         return http.build();
     }
 
@@ -42,6 +39,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
 
 }
