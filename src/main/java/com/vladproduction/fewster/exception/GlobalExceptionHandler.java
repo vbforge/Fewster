@@ -2,11 +2,14 @@ package com.vladproduction.fewster.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +73,21 @@ public class GlobalExceptionHandler {
         errorResponse.put(MESSAGE, "An unexpected error occurred");
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+
+    //DataIntegrityViolationException
+    //SQLIntegrityConstraintViolationException
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleGenericException(DataIntegrityViolationException ex) {
+        log.error("Unexpected error occurred", ex);
+
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put(TIMESTAMP, LocalDateTime.now());
+        errorResponse.put(STATUS, HttpStatus.BAD_REQUEST.value());
+        errorResponse.put(ERROR, "Not valid request");
+        errorResponse.put(MESSAGE, "An unexpected error occurred");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
 }
