@@ -33,11 +33,12 @@ public class UrlServiceImpl implements UrlService {
     }
 
     @Override
-    public UrlDTO create(String urlText) {
+    public UrlDTO create(String urlText, boolean isDemo) {
         log.info("Attempting to create and save url: {}", urlText);
 
+
         // Get current authenticated user
-        User currentUser = authService.getCurrentUser();
+        User currentUser = isDemo ? authService.getDemoUser() : authService.getCurrentUser();
 
         // Normalize the URL to prevent duplicates like "https://example.com" and "https://example.com/"
         String normalizedUrl = globalUtility.normalizeUrl(urlText);

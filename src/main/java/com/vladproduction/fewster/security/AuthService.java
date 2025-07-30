@@ -28,6 +28,13 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("Current user not found: " + username));
     }
 
+    //Get the currently not-authenticated  demouser
+    public User getDemoUser() {
+
+        return userRepository.findByUsername("demouser")
+                .orElseThrow(() -> new RuntimeException("Current user not found: demouser"));
+    }
+
     //Get the current username
     public String getCurrentUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

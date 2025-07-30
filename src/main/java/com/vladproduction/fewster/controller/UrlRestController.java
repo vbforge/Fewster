@@ -30,7 +30,7 @@ public class UrlRestController {
     @PostMapping
     public ResponseEntity<UrlDTO> create(@RequestParam String urlText) {
         log.info("Received request to create short URL for: {}", urlText);
-        UrlDTO createdUrl = urlService.create(urlText);
+        UrlDTO createdUrl = urlService.create(urlText, false);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUrl);
     }
 

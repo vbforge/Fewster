@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> {
                     // Public endpoints
                     authorize.requestMatchers(HttpMethod.GET, "/r/**").permitAll(); // Public redirects
+                    authorize.requestMatchers(HttpMethod.POST, "/api/v1/demo-url").permitAll(); // Public redirects
                     authorize.requestMatchers(HttpMethod.POST, "/api/v1/user/**").permitAll(); // User registration
 
                     // Protected URL management endpoints
