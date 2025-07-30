@@ -20,9 +20,10 @@ public class UserController {
         this.userService = userService;
     }
 
+    //http://localhost:8080/api/v1/user
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO signupUser(@RequestBody UserDTO userDTO){
+    public UserDTO createUser(@RequestBody UserDTO userDTO){
 
         User user = new User();
         user.setUsername(userDTO.getUsername());

@@ -1,9 +1,6 @@
 package com.vladproduction.fewster.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,32 +14,36 @@ public class UrlEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 2048)
+    @Column(name = "original_url", nullable = false, length = 2048)
     private String originalUrl;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "short_url", nullable = false, unique = true)
     private String shortUrl;
 
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(name = "click_count", nullable = false)
+    private Long clickCount;
+
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    @Column(nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    // Add relationship to User
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    // Constructors
     public UrlEntity() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        this.clickCount = 0L;
     }
 
-    public UrlEntity(String originalUrl, String shortUrl) {
-        this.originalUrl = originalUrl;
-        this.shortUrl = shortUrl;
-    }
-
-    public UrlEntity(Long id, String originalUrl, String shortUrl) {
-        this.id = id;
-        this.originalUrl = originalUrl;
-        this.shortUrl = shortUrl;
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
@@ -70,6 +71,14 @@ public class UrlEntity {
         this.shortUrl = shortUrl;
     }
 
+    public Long getClickCount() {
+        return clickCount;
+    }
+
+    public void setClickCount(Long clickCount) {
+        this.clickCount = clickCount;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -86,9 +95,17 @@ public class UrlEntity {
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    public String toString() {
-        return String.format("UrlEntity{id=%d, original='%s', short='%s', created=%s}",
-                id, originalUrl, shortUrl, createdAt);
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    // Utility method to increment click count
+    public void incrementClickCount() {
+        this.clickCount++;
+        this.updatedAt = LocalDateTime.now();
     }
 }

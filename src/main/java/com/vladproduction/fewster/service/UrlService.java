@@ -6,14 +6,11 @@ import java.util.List;
 
 public interface UrlService {
 
-    List<UrlDTO> createAll(List<String> listUrlsText);
-
     UrlDTO create(String urlText);
-
-    UrlDTO getById(Long id);
-
-    UrlDTO getByShortUrl(String shortUrl);
-
-    List<UrlDTO> getAll();
+    List<UrlDTO> getAllUrlsForCurrentUser();
+    UrlDTO getUrlById(Long id);
+    UrlDTO updateUrl(Long id, String newOriginalUrl);
+    void deleteUrl(Long id);
+    String getOriginalByShortUrl(String shortUrl);
 
 }

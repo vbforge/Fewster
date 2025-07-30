@@ -22,73 +22,76 @@ public class UrlRestController {
         this.urlService = urlService;
     }
 
-    /**[POST] Create List of URLs API and save to database
-    ResponseEntity with status code 201 CREATED*/
-    @PostMapping("/batch")
-    public ResponseEntity<List<UrlDTO>> createAll(@RequestBody List<String> listUrlsText){
-
-        log.info("Received request to create List of short URLs for: {}", listUrlsText);
-        List<UrlDTO> createdUrls = urlService.createAll(listUrlsText);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUrls);
-
-    }
-
-    /**[POST] Create url API and save to database
-    ResponseEntity with status code 201 CREATED*/
+    /**
+     * Create a new short URL for the current user
+     * POST /api/v1/url
+     * <a href="http://localhost:8080/api/v1/url?urlText={provide potential url for create and save}">...</a>
+     */
     @PostMapping
-    public ResponseEntity<UrlDTO> create(@RequestParam String urlText){
-
+    public ResponseEntity<UrlDTO> create(@RequestParam String urlText) {
         log.info("Received request to create short URL for: {}", urlText);
         UrlDTO createdUrl = urlService.create(urlText);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUrl);
-
     }
 
-    /**[GET] Get by ID API and return from database if exists, otherwise friendly exception
-    ResponseEntity with status code 200 SUCCESS*/
+    /**
+     * Get all URLs for the current authenticated user
+     * GET /api/v1/url/my-urls
+     * <a href="http://localhost:8080/api/v1/url/my-urls">...</a>
+     */
+    @GetMapping("/my-urls")
+    public ResponseEntity<List<UrlDTO>> getMyUrls() {
+        log.info("Received request to get all URLs for current user");
+        List<UrlDTO> userUrls = urlService.getAllUrlsForCurrentUser();
+        return ResponseEntity.ok(userUrls);
+    }
+
+    /**
+     * Get a specific URL by ID (only if it belongs to current user)
+     * GET /api/v1/url/{id}
+     * <a href="http://localhost:8080/api/v1/url/{urlID}">...</a>
+     */
     @GetMapping("/{id}")
-    public ResponseEntity<UrlDTO> getByID(@PathVariable Long id){
-
-        log.info("Received request to get URL by ID: {}", id);
-        UrlDTO urlById = urlService.getById(id);
-        return ResponseEntity.ok(urlById);
-
+    public ResponseEntity<UrlDTO> getUrlById(@PathVariable Long id) {
+        log.info("Received request to get URL with ID: {}", id);
+        UrlDTO urlDTO = urlService.getUrlById(id);
+        return ResponseEntity.ok(urlDTO);
     }
 
-    /**[GET] Get All API and return from database if exists, otherwise friendly exception
-    ResponseEntity with status code 200 SUCCESS*/
-    @GetMapping("/all")
-    public ResponseEntity<List<UrlDTO>> getAll(){
+    /**
+     * Update an existing URL (only if it belongs to current user)
+     * PUT /api/v1/url/{id}
+     * <a href="http://localhost:8080/api/v1/url/{urlID}?newOriginalUrl={new original url}">...</a>
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<UrlDTO> updateUrl(@PathVariable Long id, @RequestParam String newOriginalUrl) {
+        log.info("Received request to update URL with ID: {} to new URL: {}", id, newOriginalUrl);
+        UrlDTO updatedUrl = urlService.updateUrl(id, newOriginalUrl);
+        return ResponseEntity.ok(updatedUrl);
+    }
 
-        log.info("Received request to get ALL URLs");
-        List<UrlDTO> allUrls = urlService.getAll();
-        return ResponseEntity.ok(allUrls);
-
+    /**
+     * Delete a URL (only if it belongs to current user)
+     * DELETE /api/v1/url/{id}
+     * <a href="http://localhost:8080/api/v1/url/{urlID}">...</a>
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUrl(@PathVariable Long id) {
+        log.info("Received request to delete URL with ID: {}", id);
+        urlService.deleteUrl(id);
+        return ResponseEntity.noContent().build();
     }
 
     /**[GET] Get URL by short URL passing in request param
-    ResponseEntity with status code 200 SUCCESS*/
-    @GetMapping("/short")
-    public ResponseEntity<UrlDTO> getByShortUrl(@RequestParam String shortUrl){
+     ResponseEntity with status code 200 SUCCESS*/
+    @GetMapping("/shortUrl")
+    public ResponseEntity<String> getOriginalByShortUrl(@RequestParam String shortUrl){
 
         log.info("Received request to get URL by short URL: {}", shortUrl);
-        UrlDTO urlDto = urlService.getByShortUrl(shortUrl);
-        return ResponseEntity.ok(urlDto);
+        String originalUrl = urlService.getOriginalByShortUrl(shortUrl);
+        return ResponseEntity.ok(originalUrl);
 
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
