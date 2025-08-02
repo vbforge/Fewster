@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Fewster</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .register-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .register-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-subtitle {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        .form-floating {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            padding: 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            background: white;
+        }
+
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .form-control.is-valid {
+            border-color: #28a745;
+        }
+
+        .form-floating > label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .brand-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .brand-link:hover {
+            color: inherit;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            color: #6c757d;
+        }
+
+        .divider:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #dee2e6;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 1rem;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .back-home {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+        }
+
+        .btn-outline-light {
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            color: white;
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-light:hover {
+            background: white;
+            color: var(--primary-color);
+            border-color: white;
+        }
+
+        .alert {
+            border-radius: 15px;
+            border: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .invalid-feedback {
+            display: block;
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .password-requirements {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .requirement {
+            color: #6c757d;
+            margin-bottom: 0.25rem;
+        }
+
+        .requirement.valid {
+            color: #28a745;
+        }
+
+        .requirement.invalid {
+            color: #dc3545;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Back to Home Button -->
+<div class="back-home">
+    <a href="/" class="btn btn-outline-light">
+        <i class="fas fa-arrow-left me-2"></i>Back to Home
+    </a>
+</div>
+
+<div class="register-container">
+    <div class="register-card">
+        <div class="register-header">
+            <a href="/" class="brand-link">
+                <h1 class="register-title">
+                    <i class="fas fa-link me-2"></i>Fewster
+                </h1>
+            </a>
+            <p class="register-subtitle">Create your account and start managing your URLs</p>
+        </div>
+
+        <!-- Flash Messages -->
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span th:text="${error}">Error message</span>
+        </div>
+
+        <!-- Registration Form -->
+        <form th:action="@{/register}" method="post" th:object="${userDTO}" id="registerForm">
+            <div class="form-floating">
+                <input type="text"
+                       class="form-control"
+                       th:field="*{username}"
+                       th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''"
+                       id="username"
+                       placeholder="Username"
+                       required>
+                <label for="username">
+                    <i class="fas fa-user me-2"></i>Username (5-20 characters)
+                </label>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+                    Username error
+                </div>
+            </div>
+
+            <div class="form-floating position-relative">
+                <input type="password"
+                       class="form-control"
+                       th:field="*{password}"
+                       th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                       id="password"
+                       placeholder="Password"
+                       required>
+                <label for="password">
+                    <i class="fas fa-lock me-2"></i>Password
+                </label>
+                <button type="button" class="password-toggle" onclick="togglePassword()">
+                    <i class="fas fa-eye" id="passwordIcon"></i>
+                </button>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                    Password error
+                </div>
+            </div>
+
+            <!-- Password Requirements -->
+            <div class="password-requirements">
+                <small class="text-muted fw-bold">Password must contain:</small>
+                <div class="requirement" id="lengthReq">
+                    <i class="fas fa-circle me-2"></i>At least 5 characters
+                </div>
+                <div class="requirement" id="lowercaseReq">
+                    <i class="fas fa-circle me-2"></i>One lowercase letter
+                </div>
+                <div class="requirement" id="uppercaseReq">
+                    <i class="fas fa-circle me-2"></i>One uppercase letter
+                </div>
+                <div class="requirement" id="digitReq">
+                    <i class="fas fa-circle me-2"></i>One digit
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+                <i class="fas fa-user-plus me-2"></i>Create Account
+            </button>
+        </form>
+
+        <div class="divider">
+            <span>Already have an account?</span>
+        </div>
+
+        <div class="login-link">
+            <p class="mb-0">
+                <a href="/login">Sign in here</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Password toggle functionality
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const passwordIcon = document.getElementById('passwordIcon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            passwordIcon.className = 'fas fa-eye-slash';
+        } else {
+            passwordInput.type = 'password';
+            passwordIcon.className = 'fas fa-eye';
+        }
+    }
+
+    // Password validation
+    const passwordInput = document.getElementById('password');
+    const usernameInput = document.getElementById('username');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // Password requirements elements
+    const lengthReq = document.getElementById('lengthReq');
+    const lowercaseReq = document.getElementById('lowercaseReq');
+    const uppercaseReq = document.getElementById('uppercaseReq');
+    const digitReq = document.getElementById('digitReq');
+
+    // Real-time password validation
+    passwordInput.addEventListener('input', function() {
+        const password = this.value;
+
+        // Length requirement (at least 5 characters)
+        if (password.length >= 5) {
+            lengthReq.classList.remove('invalid');
+            lengthReq.classList.add('valid');
+            lengthReq.querySelector('i').className = 'fas fa-check-circle me-2';
+        } else {
+            lengthReq.classList.remove('valid');
+            lengthReq.classList.add('invalid');
+            lengthReq.querySelector('i').className = 'fas fa-times-circle me-2';
+        }
+
+        // Lowercase requirement
+        if (/[a-z]/.test(password)) {
+            lowercaseReq.classList.remove('invalid');
+            lowercaseReq.classList.add('valid');
+            lowercaseReq.querySelector('i').className = 'fas fa-check-circle me-2';
+        } else {
+            lowercaseReq.classList.remove('valid');
+            lowercaseReq.classList.add('invalid');
+            lowercaseReq.querySelector('i').className = 'fas fa-times-circle me-2';
+        }
+
+        // Uppercase requirement
+        if (/[A-Z]/.test(password)) {
+            uppercaseReq.classList.remove('invalid');
+            uppercaseReq.classList.add('valid');
+            uppercaseReq.querySelector('i').className = 'fas fa-check-circle me-2';
+        } else {
+            uppercaseReq.classList.remove('valid');
+            uppercaseReq.classList.add('invalid');
+            uppercaseReq.querySelector('i').className = 'fas fa-times-circle me-2';
+        }
+
+        // Digit requirement
+        if (/\d/.test(password)) {
+            digitReq.classList.remove('invalid');
+            digitReq.classList.add('valid');
+            digitReq.querySelector('i').className = 'fas fa-check-circle me-2';
+        } else {
+            digitReq.classList.remove('valid');
+            digitReq.classList.add('invalid');
+            digitReq.querySelector('i').className = 'fas fa-times-circle me-2';
+        }
+
+        // Update password input styling
+        if (isPasswordValid(password)) {
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+        } else {
+            this.classList.remove('is-valid');
+            this.classList.add('is-invalid');
+        }
+
+        updateSubmitButton();
+    });
+
+    // Username validation
+    usernameInput.addEventListener('input', function() {
+        const username = this.value;
+
+        if (username.length >= 5 && username.length <= 20) {
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+        } else {
+            this.classList.remove('is-valid');
+            this.classList.add('is-invalid');
+        }
+
+        updateSubmitButton();
+    });
+
+    function isPasswordValid(password) {
+        return password.length >= 5 &&
+            /[a-z]/.test(password) &&
+            /[A-Z]/.test(password) &&
+            /\d/.test(password);
+    }
+
+    function isUsernameValid(username) {
+        return username.length >= 5 && username.length <= 20;
+    }
+
+    function updateSubmitButton() {
+        const password = passwordInput.value;
+        const username = usernameInput.value;
+
+        if (isPasswordValid(password) && isUsernameValid(username)) {
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+        } else {
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.6';
+        }
+    }
+
+    // Initialize submit button state
+    updateSubmitButton();
+
+    // Auto-hide alerts after 5 seconds
+    setTimeout(function() {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        });
+    }, 5000);
+
+    // Add focus animations
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentNode.style.transform = 'translateY(-2px)';
+        });
+
+        input.addEventListener('blur', function() {
+            this.parentNode.style.transform = 'translateY(0)';
+        });
+    });
+</script>
+</body>
+</html>
