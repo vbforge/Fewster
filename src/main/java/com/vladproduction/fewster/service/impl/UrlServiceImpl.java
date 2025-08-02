@@ -8,19 +8,15 @@ import com.vladproduction.fewster.repository.UrlRepository;
 import com.vladproduction.fewster.security.AuthService;
 import com.vladproduction.fewster.service.UrlService;
 import com.vladproduction.fewster.utility.GlobalUtility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+@Slf4j
 @Service
 public class UrlServiceImpl implements UrlService {
-
-    private static final Logger log = LoggerFactory.getLogger(UrlServiceImpl.class);
 
     private final UrlRepository urlRepository;
     private final AuthService authService;
@@ -44,7 +40,7 @@ public class UrlServiceImpl implements UrlService {
         String normalizedUrl = globalUtility.normalizeUrl(urlText);
 
         // Validate URL format
-        if (!globalUtility.isValidUrl(normalizedUrl)) {
+        if (globalUtility.isValidUrl(normalizedUrl)) {
             throw new IllegalArgumentException("Invalid Url format: " + normalizedUrl);
         }
 
@@ -101,7 +97,7 @@ public class UrlServiceImpl implements UrlService {
         String normalizedUrl = globalUtility.normalizeUrl(newOriginalUrl);
 
         // Validate URL format
-        if (!globalUtility.isValidUrl(normalizedUrl)) {
+        if (globalUtility.isValidUrl(normalizedUrl)) {
             throw new IllegalArgumentException("Invalid Url format: " + normalizedUrl);
         }
 
@@ -142,12 +138,12 @@ public class UrlServiceImpl implements UrlService {
 
         // Increment click count
         urlEntity.incrementClickCount();
-        urlRepository.save(urlEntity);  //todo why we should save???
+        urlRepository.save(urlEntity);
 
         log.info("Redirecting short URL: {} to: {} (click count: {})",
                 shortUrl, urlEntity.getOriginalUrl(), urlEntity.getClickCount());
 
-        return urlEntity.getOriginalUrl();  //todo: does it possible to return UrlEntity???
+        return urlEntity.getOriginalUrl();
     }
 
 }

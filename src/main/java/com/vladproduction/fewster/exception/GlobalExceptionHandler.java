@@ -1,5 +1,6 @@
 package com.vladproduction.fewster.exception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,26 +15,26 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     public static final String TIMESTAMP = "timestamp";
     public static final String STATUS = "status";
     public static final String ERROR = "error";
     public static final String MESSAGE = "message";
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(IllegalArgumentException ex){
-        log.error("Illegal argument exception: {}", ex.getMessage());
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
+        log.error("Unexpected error occurred", ex);
 
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put(TIMESTAMP, LocalDateTime.now());
-        errorResponse.put(STATUS, HttpStatus.BAD_REQUEST.value());
-        errorResponse.put(ERROR, "Bad Request");
-        errorResponse.put(MESSAGE, ex.getMessage());
+        errorResponse.put(STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        errorResponse.put(ERROR, "Internal Server Error");
+        errorResponse.put(MESSAGE, "An unexpected error occurred");
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 
     @ExceptionHandler(RuntimeException.class)
@@ -49,6 +50,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(IllegalArgumentException ex){
+        log.error("Illegal argument exception: {}", ex.getMessage());
+
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put(TIMESTAMP, LocalDateTime.now());
+        errorResponse.put(STATUS, HttpStatus.BAD_REQUEST.value());
+        errorResponse.put(ERROR, "Bad Request");
+        errorResponse.put(MESSAGE, ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
     @ExceptionHandler(ShortUrlGenerationException.class)
     public ResponseEntity<Map<String, Object>> handleShortUrlGenerationException(ShortUrlGenerationException ex) {
         log.error("Short URL generation error: {}", ex.getMessage());
@@ -58,19 +72,6 @@ public class GlobalExceptionHandler {
         errorResponse.put(STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
         errorResponse.put(ERROR, "Internal Server Error");
         errorResponse.put(MESSAGE, ex.getMessage());
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
-        log.error("Unexpected error occurred", ex);
-
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put(TIMESTAMP, LocalDateTime.now());
-        errorResponse.put(STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-        errorResponse.put(ERROR, "Internal Server Error");
-        errorResponse.put(MESSAGE, "An unexpected error occurred");
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }

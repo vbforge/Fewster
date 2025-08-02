@@ -1,20 +1,22 @@
-package com.vladproduction.fewster.controller;
+package com.vladproduction.fewster.controller.rest;
 
 import com.vladproduction.fewster.dto.UserDTO;
 import com.vladproduction.fewster.entity.User;
 import com.vladproduction.fewster.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-    private final UserService userService;
-
     @Value("${role.name}")
     private String role;
+
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;

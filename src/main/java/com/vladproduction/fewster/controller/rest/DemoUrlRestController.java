@@ -1,20 +1,16 @@
-package com.vladproduction.fewster.controller;
+package com.vladproduction.fewster.controller.rest;
 
 import com.vladproduction.fewster.dto.UrlDTO;
 import com.vladproduction.fewster.service.UrlService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/demo-url")
 public class DemoUrlRestController {
-
-    private static final Logger log = LoggerFactory.getLogger(DemoUrlRestController.class);
 
     private final UrlService urlService;
 
@@ -23,9 +19,9 @@ public class DemoUrlRestController {
     }
 
     /**
-     * Create a new short URL for the current user
-     * POST /api/v1/url
-     * <a href="http://localhost:8080/api/v1/url?urlText={provide potential url for create and save}">...</a>
+     * Create a new short URL for the demo user
+     * POST /api/v1/demo-url
+     * <a href="http://localhost:8080/api/v1/demo-url?urlText={provide potential url for create}">...</a>
      */
     @PostMapping
     public ResponseEntity<UrlDTO> create(@RequestParam String urlText) {
@@ -33,8 +29,6 @@ public class DemoUrlRestController {
         UrlDTO createdUrl = urlService.create(urlText, true);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUrl);
     }
-
-
 
 }
 

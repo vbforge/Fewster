@@ -4,15 +4,13 @@ import com.vladproduction.fewster.entity.User;
 import com.vladproduction.fewster.exception.ShortUrlGenerationException;
 import com.vladproduction.fewster.repository.UrlRepository;
 import com.vladproduction.fewster.service.ShortAlgorithmService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class GlobalUtility {
-
-    private static final Logger log = LoggerFactory.getLogger(GlobalUtility.class);
 
     public static final String HTTP = "http://";
     public static final String HTTPS = "https://";
@@ -74,14 +72,16 @@ public class GlobalUtility {
      * Helper method to check if URL is valid
      */
     public boolean isValidUrl(String url) {
-        return url != null &&
-                (!url.trim().isEmpty()) &&
-                (url.startsWith(HTTP) || url.startsWith(HTTPS));
+        return url == null ||
+                (url.trim().isEmpty()) ||
+                (!url.startsWith(HTTP) && !url.startsWith(HTTPS));
     }
 
     /**
      * Helper method to normalize URL (remove trailing slashes, etc.)
-     * This helps prevent duplicate URLs like "https://example.com" and "https://example.com/"
+     * This helps prevent duplicate URLs like:
+     * "<a href="https://example.com">...</a>";
+     * "<a href="https://example.com/">...</a>"
      */
     public String normalizeUrl(String url) {
         if (url == null || url.trim().isEmpty()) {
