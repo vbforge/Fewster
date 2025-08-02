@@ -1,0 +1,69 @@
+# ========================================
+# Java + Maven + IntelliJ IDEA GitIgnore
+# ========================================
+
+# === Maven ===
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Keep Maven Wrapper JAR (if present)
+!.mvn/wrapper/maven-wrapper.jar
+
+# === IntelliJ IDEA ===
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# === OS-specific files ===
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# === Logs and temp ===
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# === Java specific ===
+*.class
+*.jar
+*.war
+*.ear
+
+# === VS Code (if used) ===
+.vscode/
+
+# === Test & build tools output (optional) ===
+# Optional: only add if you're generating these directories
+# bin/
+# build/
+# generated/
+
+# === Keep target folders in test/resources if needed ===
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# === Ignore generated coverage or report folders ===
+/jacoco.exec
+/coverage/
+*/test-output/
+*/surefire-reports/
+*/failsafe-reports/
+
+
