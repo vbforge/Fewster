@@ -29,11 +29,11 @@ public class DashboardController {
             List<UrlDTO> userUrls = urlService.getAllUrlsForCurrentUser();
             model.addAttribute("urls", userUrls);
             model.addAttribute("urlDTO", new UrlDTO());
-            return "dashboard/index";
+            return "dashboard/profile";
         } catch (Exception e) {
             log.error("Error loading dashboard", e);
             model.addAttribute("error", "Error loading your URLs");
-            return "dashboard/index";
+            return "dashboard/profile";
         }
     }
 
@@ -46,7 +46,7 @@ public class DashboardController {
         if (bindingResult.hasErrors()) {
             List<UrlDTO> userUrls = urlService.getAllUrlsForCurrentUser();
             model.addAttribute("urls", userUrls);
-            return "dashboard/index";
+            return "dashboard/profile";
         }
 
         try {

@@ -23,12 +23,12 @@ public class SecurityConfig {
     @Value("${role.name}")
     private String role;
 
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) -> {
+
                     // Public endpoints - no authentication required
                     authorize.requestMatchers(HttpMethod.GET, "/").permitAll(); // Homepage
                     authorize.requestMatchers(HttpMethod.GET, "/login").permitAll(); // Login page
