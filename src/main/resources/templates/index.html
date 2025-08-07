@@ -6,212 +6,17 @@
     <title>Fewster - URL Shortener</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --accent-color: #f093fb;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .navbar {
-            background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            font-size: 1.5rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-section {
-            padding: 100px 0;
-            text-align: center;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 3rem;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .url-shortener-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: none;
-            border-radius: 25px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            padding: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .form-control {
-            border-radius: 15px;
-            border: 2px solid #e9ecef;
-            padding: 15px 25px;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 25px;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-outline-primary {
-            border: 2px solid #3d3dc7;
-            color: #3d3dc7;
-            border-radius: 25px;
-            padding: 12px 30px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-outline-primary:hover {
-            background: white;
-            color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .features-section {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.95);
-            border: none;
-            border-radius: 20px;
-            padding: 2rem;
-            height: 100%;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-        }
-
-        .result-card {
-            background: linear-gradient(45deg, #28a745, #20c997);
-            color: white;
-            border-radius: 20px;
-            padding: 2rem;
-            margin-top: 2rem;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        .copy-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-        }
-
-        .footer {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            margin-top: auto;
-        }
-
-        .alert {
-            border-radius: 15px;
-            border: none;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
+
 <body class="d-flex flex-column">
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container">
-        <a class="navbar-brand" href="/">
-            <i class="fas fa-link me-2"></i>Fewster
-        </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="btn btn-outline-primary me-2" th:href="@{/login}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-outline-primary" th:href="@{/register}">Register</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<!-- Header Fragment -->
+<div th:replace="~{fragments/header-frag :: header}"></div>
 
 <!-- Main Content -->
 <main class="flex-grow-1">
+
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
@@ -232,8 +37,6 @@
                         <span th:text="${error}">Error message</span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
-
-
 
                     <div class="url-shortener-card fade-in">
                         <h3 class="mb-4 text-center">Try it now - No registration required!</h3>
@@ -259,33 +62,33 @@
                     </div>
 
                     <!-- Result Display -->
-                    <div th:if="${demoUrl}" class="result-card">
+                    <div th:if="${demoUrl}" class="result-card text-center">
                         <h5 class="mb-3">
-                            <i class="fas fa-check-circle me-2"></i>Your shortened URL is ready!
+                            <i class="fas fa-check-circle me-2"></i>Ready!
                         </h5>
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <div class="input-group">
-                                    <input type="text"
-                                           class="form-control bg-white"
-                                           th:value="${demoUrl.shortUrl}"
-                                           readonly
-                                           id="shortenedUrl">
-                                    <button class="copy-btn btn"
-                                            type="button"
-                                            onclick="copyToClipboard(document.getElementById('shortenedUrl').value)">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center align-items-center mb-3">
+                            <input type="text"
+                                   class="form-control bg-white text-center"
+                                   th:value="${demoUrl.shortUrl}"
+                                   readonly
+                                   id="shortenedUrl"
+                                   style="max-width: 400px;">
+                            <button class="copy-btn btn ms-2"
+                                    type="button"
+                                    onclick="copyToClipboard(document.getElementById('shortenedUrl').value)">
+                                <i class="fas fa-copy"></i>
+                            </button>
                         </div>
                         <p class="mt-3 mb-0 opacity-75">
-                            <i class="fas fa-info-circle me-2"></i>
-                            This demo URL is temporary. <a href="/register" class="text-white text-decoration-underline">Register</a> to manage your URLs permanently.
+<!--                            <i class="fas fa-info-circle me-2"></i>-->
+                            This demo URL is temporary.
+                            <a href="/register" class="text-white text-decoration-underline">Register</a>
+                            to manage your URLs permanently.
                         </p>
                     </div>
+
+                </div>
             </div>
-        </div>
         </div>
     </section>
 
@@ -374,23 +177,11 @@
             </div>
         </div>
     </section>
+
 </main>
 
-<!-- Footer -->
-<footer class="footer py-4 text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 text-md-start">
-                <span class="text-muted">© 2025 Fewster URL Shortener. All rights reserved.</span>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <a href="#" class="text-muted me-3"><i class="fab fa-github"></i></a>
-                <a href="#" class="text-muted me-3"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-muted"><i class="fab fa-linkedin"></i></a>
-            </div>
-        </div>
-    </div>
-</footer>
+<!-- Footer Fragment -->
+<div th:replace="~{fragments/footer-frag :: footer}"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -439,5 +230,7 @@
         });
     });
 </script>
+
 </body>
 </html>
+
