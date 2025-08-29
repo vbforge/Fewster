@@ -1,0 +1,14 @@
+@GetMapping("/about")
+    public String about() {
+        return "footer_links/about";
+    }
+
+    @GetMapping("/privacy-policy")
+    public String privacy_policy() {
+        return "footer_links/privacy-policy";
+    }
+
+    @GetMapping("/terms")
+    public String terms() {
+        return "footer_links/terms";
+    }

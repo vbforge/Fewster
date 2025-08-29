@@ -1,0 +1,26 @@
+<!--&lt;!&ndash; fragments/footer-frag.html &ndash;&gt;-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<footer th:fragment="footer" class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer">
+                <p>&copy; 2025 Fewster. Fast, reliable URL shortening service.</p>
+            </div>
+            <div class="col-md-4">
+                <div class="footer-nav">
+                    <!--          common quick links -->
+                    <a th:href="@{/about}" class="footer-nav-item"> <span>about</span></a>
+                    <a th:href="@{/privacy-policy}" class="footer-nav-item"><span>privacy-policy</span></a>
+                    <a th:href="@{/terms}" class="footer-nav-item"><span>terms</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

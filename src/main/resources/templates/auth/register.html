@@ -124,7 +124,7 @@
             color: #6c757d;
         }
 
-        .divider:before {
+        .divider::before {
             content: '';
             position: absolute;
             top: 50%;
@@ -132,11 +132,14 @@
             right: 0;
             height: 1px;
             background: #dee2e6;
+            z-index: 1;
         }
 
         .divider span {
-            background: rgba(255, 255, 255, 0.95);
+            position: relative;
+            background: #dee2e6;
             padding: 0 1rem;
+            z-index: 2;
         }
 
         .login-link {
