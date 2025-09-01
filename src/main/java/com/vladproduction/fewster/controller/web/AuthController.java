@@ -6,7 +6,6 @@ import com.vladproduction.fewster.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,30 +32,6 @@ public class AuthController {
         model.addAttribute("userDTO", new UserDTO());
         return "auth/login";
     }
-
-    /*
-    from the other project as example:
-
-    @PostMapping("/login")
-    public String processLogin(@Valid @ModelAttribute("userLogin") UserDTO userLoginDTO,
-                               BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes) {
-        // Check for validation errors from form
-        if (bindingResult.hasErrors()) {
-            return "auth/login";
-        }
-
-        try {
-            // Use the UserService for authentication
-            userService.userLogin(userLoginDTO);
-            redirectAttributes.addFlashAttribute("successMessage", "You have been successfully logged in");
-            return "redirect:/client/client-dashboard";
-        } catch (AuthenticationException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Invalid username or password");
-            return "redirect:/auth/login";
-        }
-    }
-    */
 
     @GetMapping("/register")
     public String registerPage(Model model){

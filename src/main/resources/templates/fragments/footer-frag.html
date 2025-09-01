@@ -4,21 +4,51 @@
 <div th:fragment="footer">
     <footer class="footer py-4 text-center">
         <div class="container">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-md-6 text-md-start">
                     <span class="text-muted">© 2025 Fewster URL Shortener. All rights reserved.</span>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a href="https://github.com/vbforge" class="text-muted me-3"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/vlad-bogdantsev-7897662b2/" class="text-muted"><i
-                            class="fab fa-linkedin"></i></a>
-                    <a th:href="@{/about}" class="footer-nav-item"><i class="fas fa-info-circle me-2"></i> </a>
-                    <a th:href="@{/contact}" class="footer-nav-item"><i class="fas fa-envelope me-2"></i> </a>
-
+                    <a href="https://github.com/vbforge"
+                       class="footer-social-link me-3"
+                       title="GitHub"
+                       target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/vlad-bogdantsev-7897662b2/"
+                       class="footer-social-link"
+                       title="LinkedIn"
+                       target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <style>
+        .footer-social-link {
+            color: #6c757d;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-social-link:hover {
+            color: var(--primary-color, #667eea);
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        .footer-social-link:hover .fa-github {
+            color: #333;
+        }
+
+        .footer-social-link:hover .fa-linkedin {
+            color: #0077b5;
+        }
+    </style>
 </div>
 </body>
 </html>

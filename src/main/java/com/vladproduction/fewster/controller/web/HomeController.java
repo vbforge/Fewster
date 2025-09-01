@@ -53,13 +53,4 @@ public class HomeController {
         }
     }
 
-    @GetMapping("/about")
-    public String about() { return "footer_links/about";
-    }
-
-    @GetMapping("/contact")
-    public String contact() { return "footer_links/contact";
-    }
-
-
 }
