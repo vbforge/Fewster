@@ -13,7 +13,7 @@ services:
       - fewster-network
 
   app:
-    build: .
+    image: vladbogdadocker/fewster
     container_name: fewster-app
     depends_on:
       - mysql
